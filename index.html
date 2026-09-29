@@ -205,7 +205,8 @@ textarea{
   border-color:#2563eb;
 }
 
-.search select{
+.search select,
+#searchDate{
   width:180px;
   padding:13px 12px;
   border:1px solid #d1d5db;
@@ -216,7 +217,12 @@ textarea{
   cursor:pointer;
 }
 
-.search select:focus{
+#searchDate{
+  width:160px;
+}
+
+.search select:focus,
+#searchDate:focus{
   border-color:#2563eb;
 }
 
@@ -362,14 +368,20 @@ textarea{
   border-radius:7px;
 }
 
-{
+
+/* =========================
+   工作內容
+========================= */
+
+.body{
   white-space:pre-wrap;
   line-height:1.65;
   color:#4b5563;
-
-  /* 工作內容放大 */
   font-size:17px;
+  width:90%;
+  margin:0 auto;
 }
+
 
 .keyword-highlight{
   background:#fde047;
@@ -541,30 +553,24 @@ textarea{
   }
 
   .search-row{
-    flex-direction:column;
+    flex-wrap:wrap;
   }
 
-  .search select{
-    width:100%;
+  .search-input-wrap{
+    flex:1 1 100%;
   }
 
-}
-
-
-/* =========================
-   小螢幕工作內容
-========================= */
-
-@media(max-width:600px){
+  .search select,
+  #searchDate{
+    flex:1;
+    width:auto;
+  }
 
   .body{
-  white-space:pre-wrap;
-  line-height:1.65;
-  color:#4b5563;
-  font-size:17px;
-  width:90%;
-  margin:0 auto;
-}
+    font-size:17px;
+    width:90%;
+    margin:0 auto;
+  }
 
   .title{
     font-size:17px;
@@ -761,6 +767,15 @@ textarea{
         </option>
 
       </select>
+
+
+      <!-- 日期篩選 -->
+
+      <input
+        type="date"
+        id="searchDate"
+        title="選擇日期篩選"
+      >
 
     </div>
 
@@ -1067,6 +1082,9 @@ const searchInput =
 
 const searchCategory =
   document.getElementById("searchCategory");
+
+const searchDate =
+  document.getElementById("searchDate");
 
 const content =
   document.getElementById("content");
@@ -2110,6 +2128,12 @@ function showToday(){
   searchInput.value =
     getToday();
 
+  searchCategory.value =
+    "";
+
+  searchDate.value =
+    "";
+
   render();
 
 }
@@ -2126,6 +2150,9 @@ function clearSearch(){
     "";
 
   searchCategory.value =
+    "";
+
+  searchDate.value =
     "";
 
   render();
@@ -2151,6 +2178,10 @@ function render(){
     searchCategory.value;
 
 
+  const selectedDate =
+    searchDate.value;
+
+
   const filtered =
     works.filter(
       item => {
@@ -2163,6 +2194,21 @@ function render(){
           selectedCategory &&
           item.category !==
             selectedCategory
+        ){
+
+          return false;
+
+        }
+
+
+        /* -------------------------
+           日期篩選
+        ------------------------- */
+
+        if(
+          selectedDate &&
+          item.date !==
+            selectedDate
         ){
 
           return false;
@@ -2242,7 +2288,8 @@ function render(){
 
     if(
       keyword ||
-      selectedCategory
+      selectedCategory ||
+      selectedDate
     ){
 
       emptyText =
@@ -2631,6 +2678,14 @@ searchCategory.addEventListener(
 );
 
 
+/* 日期搜尋 */
+
+searchDate.addEventListener(
+  "change",
+  render
+);
+
+
 /* 點背景關閉 Modal */
 
 modalBg.addEventListener(
@@ -2677,4 +2732,3 @@ init();
 
 </body>
 </html>
-```
