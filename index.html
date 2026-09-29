@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -6,6 +7,7 @@
 <title>每日工作日誌</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -29,6 +31,7 @@ textarea{
   margin:auto;
   min-height:100vh;
 }
+
 
 /* =========================
    登入畫面
@@ -115,6 +118,7 @@ textarea{
   color:#16a34a;
 }
 
+
 /* =========================
    Header
 ========================= */
@@ -168,6 +172,7 @@ textarea{
   font-size:12px;
 }
 
+
 /* =========================
    Search
 ========================= */
@@ -178,6 +183,16 @@ textarea{
   border-bottom:1px solid #e5e7eb;
 }
 
+.search-row{
+  display:flex;
+  gap:10px;
+}
+
+.search-input-wrap{
+  position:relative;
+  flex:1;
+}
+
 .search input{
   width:100%;
   padding:13px 16px;
@@ -186,6 +201,26 @@ textarea{
   font-size:15px;
   outline:0;
 }
+
+.search input:focus{
+  border-color:#2563eb;
+}
+
+.search select{
+  width:180px;
+  padding:13px 12px;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  font-size:15px;
+  background:#fff;
+  outline:0;
+  cursor:pointer;
+}
+
+.search select:focus{
+  border-color:#2563eb;
+}
+
 
 /* =========================
    Toolbar
@@ -228,6 +263,7 @@ textarea{
   border:1px solid #a7f3d0;
 }
 
+
 /* =========================
    Stats
 ========================= */
@@ -258,6 +294,7 @@ textarea{
   color:#6b7280;
   margin-top:4px;
 }
+
 
 /* =========================
    Content
@@ -330,7 +367,17 @@ textarea{
   white-space:pre-wrap;
   line-height:1.65;
   color:#4b5563;
-  font-size:14px;
+
+  /* 工作內容放大 */
+  font-size:17px;
+}
+
+.keyword-highlight{
+  background:#fde047;
+  color:#111827;
+  padding:1px 3px;
+  border-radius:4px;
+  font-weight:700;
 }
 
 .actions{
@@ -361,6 +408,7 @@ textarea{
   margin-bottom:10px;
 }
 
+
 /* =========================
    Loading
 ========================= */
@@ -386,6 +434,7 @@ textarea{
     transform:rotate(360deg);
   }
 }
+
 
 /* =========================
    Modal
@@ -456,6 +505,7 @@ textarea{
   flex:1;
 }
 
+
 /* =========================
    Mobile
 ========================= */
@@ -490,11 +540,40 @@ textarea{
   .auth-box{
     padding:25px 20px;
   }
+
+  .search-row{
+    flex-direction:column;
+  }
+
+  .search select{
+    width:100%;
+  }
+
 }
+
+
+/* =========================
+   小螢幕工作內容
+========================= */
+
+@media(max-width:600px){
+
+  .body{
+    font-size:16px;
+  }
+
+  .title{
+    font-size:17px;
+  }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =========================
      登入畫面
@@ -511,24 +590,32 @@ textarea{
     </div>
 
     <div class="auth-group">
+
       <label>📧 Email</label>
+
       <input
         type="email"
         id="authEmail"
         placeholder="請輸入 Email"
         autocomplete="email"
       >
+
     </div>
 
+
     <div class="auth-group">
+
       <label>🔐 密碼</label>
+
       <input
         type="password"
         id="authPassword"
         placeholder="請輸入密碼"
         autocomplete="current-password"
       >
+
     </div>
+
 
     <div class="auth-buttons">
 
@@ -548,6 +635,7 @@ textarea{
 
     </div>
 
+
     <div
       id="authMessage"
       class="auth-message"
@@ -556,6 +644,7 @@ textarea{
   </div>
 
 </div>
+
 
 
 <!-- =========================
@@ -573,9 +662,13 @@ textarea{
     <div class="header-top">
 
       <div>
+
         <h1>📋 每日工作日誌</h1>
+
         <p id="todayText"></p>
+
       </div>
+
 
       <div class="user-area">
 
@@ -598,15 +691,82 @@ textarea{
   </header>
 
 
+
+  <!-- =========================
+       搜尋
+  ========================= -->
+
   <div class="search">
 
-    <input
-      id="searchInput"
-      placeholder="🔍 搜尋日期、標題、工作內容、分類..."
-    >
+    <div class="search-row">
+
+      <div class="search-input-wrap">
+
+        <input
+          id="searchInput"
+          placeholder="🔍 搜尋日期、標題、工作內容..."
+        >
+
+      </div>
+
+
+      <select id="searchCategory">
+
+        <option value="">
+          📂 全部分類
+        </option>
+
+        <option value="驗車">
+          驗車
+        </option>
+
+        <option value="eTAG">
+          eTAG
+        </option>
+
+        <option value="加油卡">
+          加油卡
+        </option>
+
+        <option value="罰單">
+          罰單
+        </option>
+
+        <option value="保險">
+          保險
+        </option>
+
+        <option value="新購車">
+          新購車
+        </option>
+
+        <option value="新租賃">
+          新租賃
+        </option>
+
+        <option value="報廢">
+          報廢
+        </option>
+
+        <option value="停車費">
+          停車費
+        </option>
+
+        <option value="其他">
+          其他
+        </option>
+
+      </select>
+
+    </div>
 
   </div>
 
+
+
+  <!-- =========================
+       工具列
+  ========================= -->
 
   <div class="toolbar">
 
@@ -617,6 +777,7 @@ textarea{
       ＋ 新增工作內容
     </button>
 
+
     <button
       class="btn secondary"
       id="todayBtn"
@@ -624,12 +785,14 @@ textarea{
       📅 今天
     </button>
 
+
     <button
       class="btn secondary"
       id="clearSearchBtn"
     >
       清除搜尋
     </button>
+
 
     <button
       class="btn import-btn"
@@ -641,6 +804,11 @@ textarea{
 
   </div>
 
+
+
+  <!-- =========================
+       統計
+  ========================= -->
 
   <div class="stats">
 
@@ -694,12 +862,14 @@ textarea{
   </div>
 
 
+
   <main
     class="content"
     id="content"
   ></main>
 
 </div>
+
 
 
 <!-- =========================
@@ -793,6 +963,7 @@ textarea{
         取消
       </button>
 
+
       <button
         class="btn primary"
         id="saveBtn"
@@ -807,10 +978,16 @@ textarea{
 </div>
 
 
-<!-- Supabase JS -->
+
+<!-- =========================
+     Supabase
+========================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
+
 
 /* =========================================================
    Supabase 設定
@@ -821,6 +998,7 @@ const SUPABASE_URL =
 
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_o6G3PznegosN1WWYswC9mA_PPsFiMaP";
+
 
 const supabaseClient =
   window.supabase.createClient(
@@ -836,6 +1014,7 @@ const supabaseClient =
   );
 
 
+
 /* =========================================================
    全域變數
 ========================================================= */
@@ -845,6 +1024,7 @@ let works = [];
 let editingId = null;
 
 let currentUser = null;
+
 
 
 /* =========================================================
@@ -880,6 +1060,9 @@ const userEmail =
 
 const searchInput =
   document.getElementById("searchInput");
+
+const searchCategory =
+  document.getElementById("searchCategory");
 
 const content =
   document.getElementById("content");
@@ -918,6 +1101,7 @@ const importBtn =
   document.getElementById("importBtn");
 
 
+
 /* =========================================================
    日期
 ========================================================= */
@@ -933,6 +1117,7 @@ function getToday(){
   ).padStart(2,"0")}`;
 
 }
+
 
 
 function updateToday(){
@@ -955,6 +1140,7 @@ function updateToday(){
 }
 
 
+
 /* =========================================================
    Escape HTML
 ========================================================= */
@@ -973,6 +1159,49 @@ function esc(value=""){
   );
 
 }
+
+
+
+/* =========================================================
+   搜尋關鍵字反白
+========================================================= */
+
+function highlight(
+  value="",
+  keyword=""
+){
+
+  const text =
+    esc(value);
+
+  if(!keyword){
+
+    return text;
+
+  }
+
+
+  const escapedKeyword =
+    keyword.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      "\\$&"
+    );
+
+
+  const regex =
+    new RegExp(
+      `(${escapedKeyword})`,
+      "gi"
+    );
+
+
+  return text.replace(
+    regex,
+    '<mark class="keyword-highlight">$1</mark>'
+  );
+
+}
+
 
 
 /* =========================================================
@@ -999,6 +1228,7 @@ function formatDate(value){
 }
 
 
+
 /* =========================================================
    登入訊息
 ========================================================= */
@@ -1017,6 +1247,7 @@ function showAuthMessage(
 }
 
 
+
 /* =========================================================
    登入
 ========================================================= */
@@ -1028,6 +1259,7 @@ async function login(){
 
   const password =
     authPassword.value;
+
 
   if(!email || !password){
 
@@ -1087,6 +1319,7 @@ async function login(){
   }
 
 }
+
 
 
 /* =========================================================
@@ -1187,6 +1420,7 @@ async function register(){
 }
 
 
+
 /* =========================================================
    登出
 ========================================================= */
@@ -1197,6 +1431,7 @@ async function logout(){
     error
   } =
     await supabaseClient.auth.signOut();
+
 
   if(error){
 
@@ -1219,9 +1454,11 @@ async function logout(){
   authScreen.style.display =
     "flex";
 
-  authPassword.value = "";
+  authPassword.value =
+    "";
 
 }
+
 
 
 /* =========================================================
@@ -1250,6 +1487,7 @@ async function showApp(user){
 }
 
 
+
 /* =========================================================
    載入雲端資料
 ========================================================= */
@@ -1258,8 +1496,11 @@ async function loadWorks(){
 
   content.innerHTML = `
     <div class="loading">
+
       <div class="spinner"></div>
+
       正在載入雲端工作紀錄...
+
     </div>
   `;
 
@@ -1271,12 +1512,18 @@ async function loadWorks(){
     await supabaseClient
       .from("work_diary")
       .select("*")
-      .order("work_date", {
-        ascending:false
-      })
-      .order("created_at", {
-        ascending:false
-      });
+      .order(
+        "work_date",
+        {
+          ascending:false
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
 
 
   if(error){
@@ -1284,42 +1531,54 @@ async function loadWorks(){
     console.error(error);
 
     content.innerHTML = `
+
       <div class="empty">
-        <div class="icon">⚠️</div>
+
+        <div class="icon">
+          ⚠️
+        </div>
+
         <div>
           載入資料失敗
         </div>
+
         <div style="margin-top:8px;font-size:13px;">
           ${esc(error.message)}
         </div>
+
       </div>
+
     `;
 
     return;
+
   }
 
 
   works =
-    (data || []).map(item => ({
+    (data || []).map(
+      item => ({
 
-      id:item.id,
+        id:item.id,
 
-      date:item.work_date,
+        date:item.work_date,
 
-      title:item.title,
+        title:item.title,
 
-      category:item.category,
+        category:item.category,
 
-      content:item.content,
+        content:item.content,
 
-      createdAt:item.created_at
+        createdAt:item.created_at
 
-    }));
+      })
+    );
 
 
   render();
 
 }
+
 
 
 /* =========================================================
@@ -1366,6 +1625,7 @@ function checkLocalData(){
 }
 
 
+
 /* =========================================================
    匯入舊資料
 ========================================================= */
@@ -1375,10 +1635,12 @@ async function importOldData(){
   if(!currentUser){
 
     return;
+
   }
 
 
   let oldData = [];
+
 
   try{
 
@@ -1433,24 +1695,32 @@ async function importOldData(){
 
   const rows =
     oldData
-      .filter(x =>
-        x.date &&
-        x.title &&
-        x.content
+      .filter(
+        x =>
+          x.date &&
+          x.title &&
+          x.content
       )
-      .map(x => ({
+      .map(
+        x => ({
 
-        user_id:currentUser.id,
+          user_id:
+            currentUser.id,
 
-        work_date:x.date,
+          work_date:
+            x.date,
 
-        title:x.title,
+          title:
+            x.title,
 
-        category:x.category || "其他",
+          category:
+            x.category || "其他",
 
-        content:x.content
+          content:
+            x.content
 
-      }));
+        })
+      );
 
 
   if(rows.length === 0){
@@ -1513,6 +1783,7 @@ async function importOldData(){
 }
 
 
+
 /* =========================================================
    開啟新增 / 編輯
 ========================================================= */
@@ -1526,7 +1797,9 @@ function openModal(id=null){
 
     const item =
       works.find(
-        x => String(x.id) === String(id)
+        x =>
+          String(x.id) ===
+          String(id)
       );
 
 
@@ -1544,14 +1817,18 @@ function openModal(id=null){
     modalTitle.textContent =
       "編輯工作內容";
 
+
     dateInput.value =
       item.date || getToday();
+
 
     titleInput.value =
       item.title || "";
 
+
     categoryInput.value =
       item.category || "其他";
+
 
     contentInput.value =
       item.content || "";
@@ -1562,14 +1839,18 @@ function openModal(id=null){
     modalTitle.textContent =
       "新增工作內容";
 
+
     dateInput.value =
       getToday();
+
 
     titleInput.value =
       "";
 
+
     categoryInput.value =
       "驗車";
+
 
     contentInput.value =
       "";
@@ -1582,6 +1863,7 @@ function openModal(id=null){
   );
 
 }
+
 
 
 /* =========================================================
@@ -1597,6 +1879,7 @@ function closeModal(){
   editingId = null;
 
 }
+
 
 
 /* =========================================================
@@ -1666,13 +1949,17 @@ async function saveWork(){
         .from("work_diary")
         .update({
 
-          work_date:workDate,
+          work_date:
+            workDate,
 
-          title:title,
+          title:
+            title,
 
-          category:category,
+          category:
+            category,
 
-          content:workContent
+          content:
+            workContent
 
         })
         .eq(
@@ -1696,15 +1983,20 @@ async function saveWork(){
         .from("work_diary")
         .insert({
 
-          user_id:currentUser.id,
+          user_id:
+            currentUser.id,
 
-          work_date:workDate,
+          work_date:
+            workDate,
 
-          title:title,
+          title:
+            title,
 
-          category:category,
+          category:
+            category,
 
-          content:workContent
+          content:
+            workContent
 
         });
 
@@ -1740,6 +2032,7 @@ async function saveWork(){
   await loadWorks();
 
 }
+
 
 
 /* =========================================================
@@ -1803,6 +2096,7 @@ async function deleteWork(id){
 }
 
 
+
 /* =========================================================
    今天
 ========================================================= */
@@ -1817,6 +2111,7 @@ function showToday(){
 }
 
 
+
 /* =========================================================
    清除搜尋
 ========================================================= */
@@ -1826,9 +2121,13 @@ function clearSearch(){
   searchInput.value =
     "";
 
+  searchCategory.value =
+    "";
+
   render();
 
 }
+
 
 
 /* =========================================================
@@ -1837,15 +2136,39 @@ function clearSearch(){
 
 function render(){
 
+  const keyword =
+    searchInput.value.trim();
+
   const q =
-    searchInput.value
-      .trim()
-      .toLowerCase();
+    keyword.toLowerCase();
+
+
+  const selectedCategory =
+    searchCategory.value;
 
 
   const filtered =
-    works
-      .filter(item => {
+    works.filter(
+      item => {
+
+        /* -------------------------
+           分類篩選
+        ------------------------- */
+
+        if(
+          selectedCategory &&
+          item.category !==
+            selectedCategory
+        ){
+
+          return false;
+
+        }
+
+
+        /* -------------------------
+           沒有關鍵字
+        ------------------------- */
 
         if(!q){
 
@@ -1853,6 +2176,10 @@ function render(){
 
         }
 
+
+        /* -------------------------
+           關鍵字搜尋
+        ------------------------- */
 
         return [
 
@@ -1869,8 +2196,13 @@ function render(){
         .toLowerCase()
         .includes(q);
 
-      });
+      }
+    );
 
+
+  /* =========================
+     統計
+  ========================= */
 
   total.textContent =
     works.length;
@@ -1879,19 +2211,41 @@ function render(){
   todayCount.textContent =
     works.filter(
       item =>
-        item.date === getToday()
+        item.date ===
+        getToday()
     ).length;
 
 
   dates.textContent =
     new Set(
       works.map(
-        item => item.date
+        item =>
+          item.date
       )
     ).size;
 
 
+
+  /* =========================
+     沒有結果
+  ========================= */
+
   if(filtered.length === 0){
+
+    let emptyText =
+      "目前還沒有工作紀錄，按「新增工作內容」開始吧！";
+
+
+    if(
+      keyword ||
+      selectedCategory
+    ){
+
+      emptyText =
+        "找不到符合的工作紀錄";
+
+    }
+
 
     content.innerHTML = `
 
@@ -1901,11 +2255,7 @@ function render(){
           📭
         </div>
 
-        ${
-          q
-          ? "找不到符合的工作紀錄"
-          : "目前還沒有工作紀錄，按「新增工作內容」開始吧！"
-        }
+        ${emptyText}
 
       </div>
 
@@ -1916,20 +2266,29 @@ function render(){
   }
 
 
+
+  /* =========================
+     依日期分組
+  ========================= */
+
   const groups = {};
 
 
-  filtered.forEach(item => {
+  filtered.forEach(
+    item => {
 
-    if(!groups[item.date]){
+      if(!groups[item.date]){
 
-      groups[item.date] = [];
+        groups[item.date] = [];
+
+      }
+
+      groups[item.date].push(
+        item
+      );
 
     }
-
-    groups[item.date].push(item);
-
-  });
+  );
 
 
   let html = "";
@@ -1940,130 +2299,152 @@ function render(){
       (a,b) =>
         b.localeCompare(a)
     )
-    .forEach(date => {
-
-      html += `
-
-        <section class="date-section">
-
-          <div class="date-head">
-
-            <h2>
-              📅 ${formatDate(date)}
-            </h2>
-
-            <span class="badge">
-              ${groups[date].length} 筆
-            </span>
-
-          </div>
-
-      `;
-
-
-      groups[date].forEach(item => {
-
-        let createdText = "";
-
-
-        if(item.createdAt){
-
-          try{
-
-            createdText =
-              new Date(
-                item.createdAt
-              ).toLocaleString(
-                "zh-TW",
-                {
-                  month:"numeric",
-                  day:"numeric",
-                  hour:"2-digit",
-                  minute:"2-digit"
-                }
-              );
-
-          }catch(error){
-
-            createdText =
-              "";
-
-          }
-
-        }
-
+    .forEach(
+      date => {
 
         html += `
 
-          <article class="card">
+          <section class="date-section">
 
-            <div class="meta">
+            <div class="date-head">
 
-              ${
-                createdText
-                ? `建立於 ${esc(createdText)}`
-                : ""
-              }
+              <h2>
+                📅 ${formatDate(date)}
+              </h2>
 
-            </div>
-
-
-            <div class="title">
-
-              ${esc(item.title)}
-
-            </div>
-
-
-            <div class="tags">
-
-              <span class="tag">
-
-                ${esc(item.category || "其他")}
-
+              <span class="badge">
+                ${groups[date].length} 筆
               </span>
 
             </div>
 
-
-            <div class="body">
-
-              ${esc(item.content)}
-
-            </div>
+        `;
 
 
-            <div class="actions">
+        groups[date].forEach(
+          item => {
 
-              <button
-                class="btn edit"
-                onclick="openModal('${String(item.id)}')"
-              >
-                ✏️ 編輯
-              </button>
+            let createdText =
+              "";
 
 
-              <button
-                class="btn del"
-                onclick="deleteWork('${String(item.id)}')"
-              >
-                🗑️ 刪除
-              </button>
+            if(item.createdAt){
 
-            </div>
+              try{
 
-          </article>
+                createdText =
+                  new Date(
+                    item.createdAt
+                  ).toLocaleString(
+                    "zh-TW",
+                    {
+                      month:"numeric",
+                      day:"numeric",
+                      hour:"2-digit",
+                      minute:"2-digit"
+                    }
+                  );
+
+              }catch(error){
+
+                createdText =
+                  "";
+
+              }
+
+            }
+
+
+            html += `
+
+              <article class="card">
+
+
+                <div class="meta">
+
+                  ${
+                    createdText
+                    ? `建立於 ${esc(createdText)}`
+                    : ""
+                  }
+
+                </div>
+
+
+
+                <div class="title">
+
+                  ${highlight(
+                    item.title,
+                    keyword
+                  )}
+
+                </div>
+
+
+
+                <div class="tags">
+
+                  <span class="tag">
+
+                    ${highlight(
+                      item.category || "其他",
+                      keyword
+                    )}
+
+                  </span>
+
+                </div>
+
+
+
+                <div class="body">
+
+                  ${highlight(
+                    item.content,
+                    keyword
+                  )}
+
+                </div>
+
+
+
+                <div class="actions">
+
+                  <button
+                    class="btn edit"
+                    onclick="openModal('${String(item.id)}')"
+                  >
+                    ✏️ 編輯
+                  </button>
+
+
+                  <button
+                    class="btn del"
+                    onclick="deleteWork('${String(item.id)}')"
+                  >
+                    🗑️ 刪除
+                  </button>
+
+                </div>
+
+
+              </article>
+
+            `;
+
+          }
+        );
+
+
+        html += `
+
+          </section>
 
         `;
 
-      });
-
-
-      html += `
-        </section>
-      `;
-
-    });
+      }
+    );
 
 
   content.innerHTML =
@@ -2072,12 +2453,16 @@ function render(){
 }
 
 
+
 /* =========================================================
    Auth 狀態
 ========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
-  async (event, session) => {
+  async (
+    event,
+    session
+  ) => {
 
     if(session?.user){
 
@@ -2087,12 +2472,15 @@ supabaseClient.auth.onAuthStateChange(
 
     }else{
 
-      currentUser = null;
+      currentUser =
+        null;
 
       works = [];
 
+
       app.style.display =
         "none";
+
 
       authScreen.style.display =
         "flex";
@@ -2101,6 +2489,7 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 );
+
 
 
 /* =========================================================
@@ -2152,6 +2541,7 @@ async function init(){
 }
 
 
+
 /* =========================================================
    按鈕事件
 ========================================================= */
@@ -2178,7 +2568,8 @@ document
   .getElementById("addBtn")
   .addEventListener(
     "click",
-    () => openModal()
+    () =>
+      openModal()
   );
 
 
@@ -2220,8 +2611,18 @@ importBtn.addEventListener(
 );
 
 
+/* 關鍵字搜尋 */
+
 searchInput.addEventListener(
   "input",
+  render
+);
+
+
+/* 分類搜尋 */
+
+searchCategory.addEventListener(
+  "change",
   render
 );
 
@@ -2233,7 +2634,8 @@ modalBg.addEventListener(
   event => {
 
     if(
-      event.target === modalBg
+      event.target ===
+      modalBg
     ){
 
       closeModal();
@@ -2250,7 +2652,10 @@ authPassword.addEventListener(
   "keydown",
   event => {
 
-    if(event.key === "Enter"){
+    if(
+      event.key ===
+      "Enter"
+    ){
 
       login();
 
@@ -2268,3 +2673,4 @@ init();
 
 </body>
 </html>
+```
