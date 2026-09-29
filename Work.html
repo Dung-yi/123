@@ -1,158 +1,833 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>每日工作日誌</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:#f3f5f8;color:#1f2937}
-.app{max-width:980px;margin:auto;min-height:100vh}.header{background:linear-gradient(135deg,#172033,#34435e);color:#fff;padding:28px 20px}
-.header h1{margin:0;font-size:25px}.header p{margin:8px 0 0;color:#d7deea;font-size:14px}
-.search{background:#fff;padding:16px;border-bottom:1px solid #e5e7eb}.search input{width:100%;padding:13px 16px;border:1px solid #d1d5db;border-radius:12px;font-size:15px;outline:0}
-.toolbar{display:flex;gap:10px;padding:16px}.btn{border:0;border-radius:11px;padding:12px 16px;font-size:14px;cursor:pointer}.primary{background:#2563eb;color:#fff;flex:1;font-weight:600}.secondary{background:#fff;border:1px solid #d1d5db}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 16px 16px}.stat{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px;text-align:center}.num{font-size:22px;font-weight:700;color:#2563eb}.label{font-size:12px;color:#6b7280;margin-top:4px}
-.content{padding:0 16px 40px}.date-section{margin-bottom:20px}.date-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.date-head h2{font-size:18px;margin:0}.badge{font-size:12px;background:#e8efff;color:#2563eb;padding:5px 9px;border-radius:20px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:0 2px 5px #00000008}.meta{font-size:12px;color:#6b7280;margin-bottom:8px}.title{font-size:17px;font-weight:700;margin-bottom:9px}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.tag{font-size:12px;background:#f1f5f9;padding:5px 8px;border-radius:7px}.danger{background:#fff1f2;color:#be123c}.body{white-space:pre-wrap;line-height:1.65;color:#4b5563;font-size:14px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.edit{background:#eff6ff;color:#2563eb}.del{background:#fff1f2;color:#dc2626}
-.empty{text-align:center;padding:60px 20px;color:#9ca3af}.empty .icon{font-size:44px;margin-bottom:10px}
-.modal-bg{display:none;position:fixed;inset:0;background:#0008;z-index:10;padding:18px;align-items:center;justify-content:center}.modal-bg.show{display:flex}.modal{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:18px;padding:22px}.modal h2{margin:0 0 18px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.group{margin-bottom:14px}.group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}.group input,.group select,.group textarea{width:100%;padding:11px 12px;border:1px solid #d1d5db;border-radius:10px;font:inherit;outline:0}.group textarea{min-height:110px;resize:vertical}.check{display:flex;align-items:center;gap:8px;font-size:14px;margin:4px 0 14px}.modal-actions{display:flex;gap:10px}.modal-actions button{flex:1}
-@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}.toolbar{flex-direction:column}.primary{width:100%}}
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
+ background:#f3f5f8;
+ color:#1f2937
+}
+
+.app{
+ max-width:980px;
+ margin:auto;
+ min-height:100vh
+}
+
+.header{
+ background:linear-gradient(135deg,#172033,#34435e);
+ color:#fff;
+ padding:28px 20px
+}
+
+.header h1{
+ margin:0;
+ font-size:25px
+}
+
+.header p{
+ margin:8px 0 0;
+ color:#d7deea;
+ font-size:14px
+}
+
+.search{
+ background:#fff;
+ padding:16px;
+ border-bottom:1px solid #e5e7eb
+}
+
+.search input{
+ width:100%;
+ padding:13px 16px;
+ border:1px solid #d1d5db;
+ border-radius:12px;
+ font-size:15px;
+ outline:0
+}
+
+.toolbar{
+ display:flex;
+ gap:10px;
+ padding:16px
+}
+
+.btn{
+ border:0;
+ border-radius:11px;
+ padding:12px 16px;
+ font-size:14px;
+ cursor:pointer
+}
+
+.primary{
+ background:#2563eb;
+ color:#fff;
+ flex:1;
+ font-weight:600
+}
+
+.secondary{
+ background:#fff;
+ border:1px solid #d1d5db
+}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ padding:0 16px 16px
+}
+
+.stat{
+ background:#fff;
+ border:1px solid #e5e7eb;
+ border-radius:12px;
+ padding:14px;
+ text-align:center
+}
+
+.num{
+ font-size:22px;
+ font-weight:700;
+ color:#2563eb
+}
+
+.label{
+ font-size:12px;
+ color:#6b7280;
+ margin-top:4px
+}
+
+.content{
+ padding:0 16px 40px
+}
+
+.date-section{
+ margin-bottom:20px
+}
+
+.date-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:10px
+}
+
+.date-head h2{
+ font-size:18px;
+ margin:0
+}
+
+.badge{
+ font-size:12px;
+ background:#e8efff;
+ color:#2563eb;
+ padding:5px 9px;
+ border-radius:20px
+}
+
+.card{
+ background:#fff;
+ border:1px solid #e5e7eb;
+ border-radius:14px;
+ padding:16px;
+ margin-bottom:10px;
+ box-shadow:0 2px 5px #00000008
+}
+
+.meta{
+ font-size:12px;
+ color:#6b7280;
+ margin-bottom:8px
+}
+
+.title{
+ font-size:17px;
+ font-weight:700;
+ margin-bottom:9px
+}
+
+.tags{
+ display:flex;
+ gap:6px;
+ flex-wrap:wrap;
+ margin-bottom:10px
+}
+
+.tag{
+ font-size:12px;
+ background:#f1f5f9;
+ padding:5px 8px;
+ border-radius:7px
+}
+
+.body{
+ white-space:pre-wrap;
+ line-height:1.65;
+ color:#4b5563;
+ font-size:14px
+}
+
+.actions{
+ display:flex;
+ justify-content:flex-end;
+ gap:8px;
+ margin-top:14px
+}
+
+.edit{
+ background:#eff6ff;
+ color:#2563eb
+}
+
+.del{
+ background:#fff1f2;
+ color:#dc2626
+}
+
+.empty{
+ text-align:center;
+ padding:60px 20px;
+ color:#9ca3af
+}
+
+.empty .icon{
+ font-size:44px;
+ margin-bottom:10px
+}
+
+.modal-bg{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:#0008;
+ z-index:10;
+ padding:18px;
+ align-items:center;
+ justify-content:center
+}
+
+.modal-bg.show{
+ display:flex
+}
+
+.modal{
+ background:#fff;
+ width:100%;
+ max-width:560px;
+ max-height:92vh;
+ overflow:auto;
+ border-radius:18px;
+ padding:22px
+}
+
+.modal h2{
+ margin:0 0 18px
+}
+
+.row{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px
+}
+
+.group{
+ margin-bottom:14px
+}
+
+.group label{
+ display:block;
+ font-size:13px;
+ font-weight:600;
+ margin-bottom:6px
+}
+
+.group input,
+.group select,
+.group textarea{
+ width:100%;
+ padding:11px 12px;
+ border:1px solid #d1d5db;
+ border-radius:10px;
+ font:inherit;
+ outline:0
+}
+
+.group textarea{
+ min-height:140px;
+ resize:vertical
+}
+
+.modal-actions{
+ display:flex;
+ gap:10px
+}
+
+.modal-actions button{
+ flex:1
+}
+
+@media(max-width:600px){
+ .stats{
+  grid-template-columns:repeat(3,1fr)
+ }
+
+ .row{
+  grid-template-columns:1fr
+ }
+
+ .toolbar{
+  flex-direction:column
+ }
+
+ .primary{
+  width:100%
+ }
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
+
 <header class="header">
 <h1>📋 每日工作日誌</h1>
 <p id="todayText"></p>
 </header>
 
 <div class="search">
-<input id="searchInput" placeholder="🔍 搜尋日期、標題、工作內容、設備、分類..." oninput="render()">
+<input
+ id="searchInput"
+ placeholder="🔍 搜尋日期、標題、工作內容、分類..."
+ oninput="render()">
 </div>
 
 <div class="toolbar">
-<button class="btn primary" onclick="openModal()">＋ 新增工作內容</button>
-<button class="btn secondary" onclick="showToday()">📅 今天</button>
-<button class="btn secondary" onclick="clearSearch()">清除搜尋</button>
+<button class="btn primary" onclick="openModal()">
+＋ 新增工作內容
+</button>
+
+<button class="btn secondary" onclick="showToday()">
+📅 今天
+</button>
+
+<button class="btn secondary" onclick="clearSearch()">
+清除搜尋
+</button>
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num" id="total">0</div><div class="label">總紀錄</div></div>
-<div class="stat"><div class="num" id="today">0</div><div class="label">今日紀錄</div></div>
-<div class="stat"><div class="num" id="dates">0</div><div class="label">紀錄日期</div></div>
-<div class="stat"><div class="num" id="issues">0</div><div class="label">異常紀錄</div></div>
+
+<div class="stat">
+<div class="num" id="total">0</div>
+<div class="label">總紀錄</div>
+</div>
+
+<div class="stat">
+<div class="num" id="today">0</div>
+<div class="label">今日紀錄</div>
+</div>
+
+<div class="stat">
+<div class="num" id="dates">0</div>
+<div class="label">紀錄日期</div>
+</div>
+
 </div>
 
 <main class="content" id="content"></main>
+
 </div>
 
+
 <div class="modal-bg" id="modalBg">
+
 <div class="modal">
+
 <h2 id="modalTitle">新增工作內容</h2>
 
 <div class="row">
-<div class="group"><label>📅 日期</label><input type="date" id="date"></div>
-<div class="group"><label>⏰ 工作時間</label><input type="text" id="time" placeholder="例如 08:00～10:00"></div>
-</div>
 
-<div class="group"><label>📝 工作標題</label><input id="title" placeholder="例如：熔爐巡檢"></div>
-
-<div class="row">
 <div class="group">
+<label>📅 日期</label>
+<input type="date" id="date">
+</div>
+
+<div class="group">
+<label>⏰ 工作時間</label>
+<input
+ type="text"
+ id="time"
+ placeholder="例如 08:00～10:00">
+</div>
+
+</div>
+
+
+<div class="group">
+
+<label>📝 工作標題</label>
+
+<input
+ id="title"
+ placeholder="例如：車輛驗車安排">
+
+</div>
+
+
+<div class="group">
+
 <label>🏷️ 工作分類</label>
+
 <select id="category">
-<option>巡檢</option><option>生產</option><option>維修</option><option>異常處理</option><option>品質</option><option>安全</option><option>其他</option>
+
+<option>驗車</option>
+<option>eTAG</option>
+<option>加油卡</option>
+<option>罰單</option>
+<option>保險</option>
+<option>新購車</option>
+<option>新租賃</option>
+<option>報廢</option>
+<option>停車費</option>
+<option>其他</option>
+
 </select>
-</div>
-<div class="group"><label>🔧 設備</label><input id="equipment" placeholder="例如：1號熔爐"></div>
+
 </div>
 
-<label class="check"><input type="checkbox" id="hasIssue"> ⚠️ 今日有異常狀況</label>
 
-<div class="group"><label>📋 工作內容</label><textarea id="contentText" placeholder="記錄今天完成的工作..."></textarea></div>
-<div class="group"><label>🛠️ 異常狀況 / 處理方式</label><textarea id="issueText" placeholder="沒有異常可以留白"></textarea></div>
+<div class="group">
+
+<label>📋 工作內容</label>
+
+<textarea
+ id="contentText"
+ placeholder="記錄今天完成的工作..."></textarea>
+
+</div>
+
 
 <div class="modal-actions">
-<button class="btn secondary" onclick="closeModal()">取消</button>
-<button class="btn primary" onclick="saveWork()">儲存紀錄</button>
+
+<button
+ class="btn secondary"
+ onclick="closeModal()">
+取消
+</button>
+
+<button
+ class="btn primary"
+ onclick="saveWork()">
+儲存紀錄
+</button>
+
 </div>
+
 </div>
+
 </div>
+
 
 <script>
-let works=JSON.parse(localStorage.getItem("workDiary")||"[]");
+
+let works=JSON.parse(
+ localStorage.getItem("workDiary")||"[]"
+);
+
 let editingId=null;
 
+
 function today(){
+
  const d=new Date();
- return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+
+ return `${d.getFullYear()}-${String(
+ d.getMonth()+1
+ ).padStart(2,"0")}-${String(
+ d.getDate()
+ ).padStart(2,"0")}`;
+
 }
+
+
 function updateToday(){
- const d=new Date(), w=["日","一","二","三","四","五","六"];
- document.getElementById("todayText").textContent=`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日 ・ 星期${w[d.getDay()]}`;
+
+ const d=new Date();
+
+ const w=[
+  "日","一","二","三",
+  "四","五","六"
+ ];
+
+ document.getElementById("todayText").textContent=
+ `${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日 ・ 星期${w[d.getDay()]}`;
+
 }
+
+
 function openModal(id=null){
+
  editingId=id;
- document.getElementById("modalTitle").textContent=id?"編輯工作內容":"新增工作內容";
+
+ document.getElementById("modalTitle").textContent=
+ id?"編輯工作內容":"新增工作內容";
+
+
  if(id){
-   const x=works.find(v=>v.id===id);
-   date.value=x.date; time.value=x.time||""; title.value=x.title; category.value=x.category;
-   equipment.value=x.equipment||""; hasIssue.checked=!!x.hasIssue;
-   contentText.value=x.content; issueText.value=x.issue||"";
+
+  const x=works.find(v=>v.id===id);
+
+  date.value=x.date;
+
+  time.value=x.time||"";
+
+  title.value=x.title;
+
+  category.value=x.category||"其他";
+
+  contentText.value=x.content||"";
+
  }else{
-   date.value=today(); time.value=""; title.value=""; category.value="巡檢";
-   equipment.value=""; hasIssue.checked=false; contentText.value=""; issueText.value="";
+
+  date.value=today();
+
+  time.value="";
+
+  title.value="";
+
+  category.value="驗車";
+
+  contentText.value="";
+
  }
+
  modalBg.classList.add("show");
+
 }
-function closeModal(){modalBg.classList.remove("show")}
+
+
+function closeModal(){
+
+ modalBg.classList.remove("show");
+
+}
+
+
 function saveWork(){
+
  const item={
-  id:editingId||Date.now(),date:date.value,time:time.value.trim(),title:title.value.trim(),
-  category:category.value,equipment:equipment.value.trim(),hasIssue:hasIssue.checked,
-  content:contentText.value.trim(),issue:issueText.value.trim(),
-  createdAt:new Date().toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"})
+
+  id:editingId||Date.now(),
+
+  date:date.value,
+
+  time:time.value.trim(),
+
+  title:title.value.trim(),
+
+  category:category.value,
+
+  content:contentText.value.trim(),
+
+  createdAt:new Date().toLocaleTimeString(
+   "zh-TW",
+   {
+    hour:"2-digit",
+    minute:"2-digit"
+   }
+  )
+
  };
- if(!item.date||!item.title||!item.content){alert("請至少填寫日期、工作標題與工作內容");return}
- if(editingId){const i=works.findIndex(v=>v.id===editingId);works[i]=item}else works.push(item);
- localStorage.setItem("workDiary",JSON.stringify(works));closeModal();render();
-}
-function deleteWork(id){
- if(confirm("確定要刪除這筆紀錄嗎？")){
-  works=works.filter(v=>v.id!==id);localStorage.setItem("workDiary",JSON.stringify(works));render();
+
+
+ if(!item.date||
+    !item.title||
+    !item.content){
+
+  alert(
+   "請至少填寫日期、工作標題與工作內容"
+  );
+
+  return;
+
  }
+
+
+ if(editingId){
+
+  const i=works.findIndex(
+   v=>v.id===editingId
+  );
+
+  works[i]=item;
+
+ }else{
+
+  works.push(item);
+
+ }
+
+
+ localStorage.setItem(
+  "workDiary",
+  JSON.stringify(works)
+ );
+
+ closeModal();
+
+ render();
+
 }
-function showToday(){searchInput.value=today();render()}
-function clearSearch(){searchInput.value="";render()}
+
+
+function deleteWork(id){
+
+ if(confirm("確定要刪除這筆紀錄嗎？")){
+
+  works=works.filter(
+   v=>v.id!==id
+  );
+
+  localStorage.setItem(
+   "workDiary",
+   JSON.stringify(works)
+  );
+
+  render();
+
+ }
+
+}
+
+
+function showToday(){
+
+ searchInput.value=today();
+
+ render();
+
+}
+
+
+function clearSearch(){
+
+ searchInput.value="";
+
+ render();
+
+}
+
+
 function formatDate(s){
- const d=new Date(s+"T00:00:00"),w=["日","一","二","三","四","五","六"];
+
+ const d=new Date(
+  s+"T00:00:00"
+ );
+
+ const w=[
+  "日","一","二","三",
+  "四","五","六"
+ ];
+
  return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} 星期${w[d.getDay()]}`;
+
 }
-function esc(s=""){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+
+function esc(s=""){
+
+ return s.replace(
+  /[&<>"']/g,
+  m=>({
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+  }[m])
+ );
+
+}
+
+
 function render(){
- const q=searchInput.value.trim().toLowerCase();
- const filtered=works.filter(x=>!q||[x.date,x.title,x.category,x.equipment,x.content,x.issue].join(" ").toLowerCase().includes(q)).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
- total.textContent=works.length;today.textContent=works.filter(x=>x.date===today()).length;
- dates.textContent=new Set(works.map(x=>x.date)).size;issues.textContent=works.filter(x=>x.hasIssue).length;
- if(!filtered.length){content.innerHTML=`<div class="empty"><div class="icon">📭</div>${q?"找不到符合的工作紀錄":"目前還沒有工作紀錄，按「新增工作內容」開始吧！"}</div>`;return}
- const groups={};filtered.forEach(x=>(groups[x.date]??=[]).push(x));
+
+ const q=
+  searchInput.value.trim().toLowerCase();
+
+
+ const filtered=
+  works
+  .filter(x=>
+   !q||
+   [
+    x.date,
+    x.title,
+    x.category,
+    x.content
+   ]
+   .join(" ")
+   .toLowerCase()
+   .includes(q)
+  )
+  .sort(
+   (a,b)=>
+    b.date.localeCompare(a.date)||
+    b.id-a.id
+  );
+
+
+ total.textContent=
+  works.length;
+
+ today.textContent=
+  works.filter(
+   x=>x.date===today()
+  ).length;
+
+ dates.textContent=
+  new Set(
+   works.map(x=>x.date)
+  ).size;
+
+
+ if(!filtered.length){
+
+  content.innerHTML=`
+
+   <div class="empty">
+
+    <div class="icon">📭</div>
+
+    ${
+     q
+     ?"找不到符合的工作紀錄"
+     :"目前還沒有工作紀錄，按「新增工作內容」開始吧！"
+    }
+
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+
+ const groups={};
+
+
+ filtered.forEach(
+  x=>
+   (groups[x.date]??=[]).push(x)
+ );
+
+
  let html="";
- Object.keys(groups).sort((a,b)=>b.localeCompare(a)).forEach(d=>{
-  html+=`<section class="date-section"><div class="date-head"><h2>📅 ${formatDate(d)}</h2><span class="badge">${groups[d].length} 筆</span></div>`;
+
+
+ Object.keys(groups)
+ .sort(
+  (a,b)=>b.localeCompare(a)
+ )
+ .forEach(d=>{
+
+  html+=`
+
+   <section class="date-section">
+
+    <div class="date-head">
+
+     <h2>
+      📅 ${formatDate(d)}
+     </h2>
+
+     <span class="badge">
+      ${groups[d].length} 筆
+     </span>
+
+    </div>
+
+  `;
+
+
   groups[d].forEach(x=>{
-   html+=`<article class="card">
-   <div class="meta">${esc(x.time||"時間未填")}　・ 建立 ${esc(x.createdAt||"")}</div>
-   <div class="title">${esc(x.title)}</div>
-   <div class="tags"><span class="tag">${esc(x.category)}</span>${x.equipment?`<span class="tag">🔧 ${esc(x.equipment)}</span>`:""}${x.hasIssue?`<span class="tag danger">⚠️ 有異常</span>`:""}</div>
-   <div class="body">${esc(x.content)}</div>
-   ${x.issue?`<div class="body" style="margin-top:10px"><b>異常 / 處理：</b>${esc(x.issue)}</div>`:""}
-   <div class="actions"><button class="btn edit" onclick="openModal(${x.id})">✏️ 編輯</button><button class="btn del" onclick="deleteWork(${x.id})">🗑️ 刪除</button></div>
-   </article>`;
+
+   html+=`
+
+    <article class="card">
+
+     <div class="meta">
+      ${esc(x.time||"時間未填")}
+      ・ 建立 ${esc(x.createdAt||"")}
+     </div>
+
+     <div class="title">
+      ${esc(x.title)}
+     </div>
+
+     <div class="tags">
+
+      <span class="tag">
+       ${esc(x.category)}
+      </span>
+
+     </div>
+
+     <div class="body">
+      ${esc(x.content)}
+     </div>
+
+     <div class="actions">
+
+      <button
+       class="btn edit"
+       onclick="openModal(${x.id})">
+       ✏️ 編輯
+      </button>
+
+      <button
+       class="btn del"
+       onclick="deleteWork(${x.id})">
+       🗑️ 刪除
+      </button>
+
+     </div>
+
+    </article>
+
+   `;
+
   });
+
+
   html+="</section>";
+
  });
+
+
  content.innerHTML=html;
+
 }
-updateToday();render();
+
+
+updateToday();
+
+render();
+
 </script>
+
 </body>
 </html>
+```
